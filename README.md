@@ -1,2 +1,2 @@
-# preconditioning
-Geometric preconditioner for indirect shooting
+# Geometric preconditioner for indirect shooting
+
