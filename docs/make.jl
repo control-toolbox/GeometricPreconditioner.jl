@@ -13,7 +13,7 @@ makedocs(
     ),
     pages = [
         "Introduction" => "index.md",
-        "2D example"   => "2D-example.md",
+        "Indirect shooting"   => "2D-example.md",
     ]
 )
 
