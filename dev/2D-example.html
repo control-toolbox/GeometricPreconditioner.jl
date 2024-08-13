@@ -26,19 +26,56 @@ nle = p0 -&gt; [S(p0[1])]                                      # intermediate fu
 # Plot
 plot(range(-7, 2, 500), S, xlim = [-7, 2])
 plot!([-7,2], [0,0], color = :black)
-plot!(xlabel = &quot;p0&quot;, ylabel = &quot;S&quot;, legend=false)</code></pre><img src="2D-example-54bb81a9.svg" alt="Example block output"/><h2 id="Finite-difference-method"><a class="docs-heading-anchor" href="#Finite-difference-method">Finite difference method</a><a id="Finite-difference-method-1"></a><a class="docs-heading-anchor-permalink" href="#Finite-difference-method" title="Permalink"></a></h2><p>The main goal now is to find the zero of <span>$S$</span>. To this purpose, we use the numerical solver <span>$\texttt{hybrd1}$</span> given in the package <span>$\texttt{MINPACK.jl}$</span>. If we don&#39;t provide the Jacobian <span>$J_S$</span> of <span>$S$</span> to the solver, the finite difference method is used to approximate it. </p><pre><code class="language-julia hljs">ξ = [-1.0]                                                  # initial guess
+plot!(xlabel = &quot;p0&quot;, ylabel = &quot;S&quot;, legend=false)</code></pre><img src="2D-example-d58d3110.svg" alt="Example block output"/><h2 id="Finite-difference-method"><a class="docs-heading-anchor" href="#Finite-difference-method">Finite difference method</a><a id="Finite-difference-method-1"></a><a class="docs-heading-anchor-permalink" href="#Finite-difference-method" title="Permalink"></a></h2><p>The main goal now is to find the zero of <span>$S$</span>. To this purpose, we use the numerical solver <span>$\texttt{hybrd1}$</span> given in the package <span>$\texttt{MINPACK.jl}$</span>. If we don&#39;t provide the Jacobian <span>$J_S$</span> of <span>$S$</span> to the solver, the finite difference method is used to approximate it. </p><pre><code class="language-julia hljs">ξ = [-1.0]                                                  # initial guess
 S!(s, ξ) = (s[:] .= S(ξ[1]); nothing)                       # intermediate function
-p0_sol = fsolve(S!, ξ, show_trace = true)                   # solve</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Results of Nonlinear Solver Algorithm
+p0_sol = fsolve(S!, ξ, show_trace = true)                   # solve
+println(p0_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
+------   --------------   --------------   --------------
+     1     3.000000e+00     0.000000e+00         0.165962
+     2     9.318967e-01     1.069263e+00         0.240037
+     3     3.908179e-08     2.171079e-01         0.001056
+     4     3.126006e-08     3.818465e-16         0.000929
+     5     2.602624e-08     7.541206e-17         0.000943
+     6     1.122729e-07     1.864781e-15         0.001027
+     7     1.251064e-08     1.228963e-15         0.000997
+     8     1.071865e-08     6.960129e-18         0.000961
+     9     3.372047e-08     2.490162e-16         0.000935
+    10     6.149611e-09     1.433785e-16         0.000994
+    11     2.836331e-08     2.624355e-17         0.000956
+    12     2.550366e-08     1.772446e-17         0.000943
+    13     2.794534e-08     1.292187e-17         0.001848
+    14     2.543587e-08     1.364932e-17         0.000925
+    15     6.042093e-09     4.286522e-19         0.000988
+    16     3.036848e-08     7.912620e-17         0.000900
+    17     2.599380e-08     5.504418e-17         0.000942
+    18     2.518026e-08     1.434518e-18         0.000932
+    19     6.005500e-09     5.041160e-20         0.000986
+    20     3.036868e-08     7.817582e-17         0.000911
+    21     2.601931e-08     5.449264e-17         0.000938
+    22     2.521370e-08     1.406704e-18         0.000917
+    23     5.969729e-09     4.888090e-20         0.000977
+    24     3.036827e-08     7.723669e-17         0.000916
+    25     2.604422e-08     5.394382e-17         0.000920
+    26     2.524639e-08     1.379606e-18         0.000928
+    27     5.934758e-09     4.741150e-20         0.000997
+    28     3.036860e-08     7.634290e-17         0.000907
+    29     2.606871e-08     5.342255e-17         0.000920
+    30     2.527841e-08     1.353711e-18         0.000917
+    31     5.900549e-09     4.601691e-20         0.000984
+    32     3.036849e-08     7.546245e-17         0.000914
+    33     2.609265e-08     5.290603e-17         0.000929
+    34     2.530975e-08     1.328510e-18         0.000915
+Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell
  * Starting Point: [-1.0]
  * Zero: [-2.500000007612481]
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 0.450148 seconds
+ * Total time: 0.437277 seconds
  * Function Calls: 34
- * Jacobian Calls (df/dx): 2</code></pre><p>!!! Don&#39;t show the trace !!! </p><pre><code class="language-julia hljs">sol = ϕ((t0, tf), x0, p0_sol.x)                             # get the optimal trajectory
-plot(sol)                                                   # plot</code></pre><img src="2D-example-7b1318a7.svg" alt="Example block output"/><h2 id="Automatic-differentiation-(wrong-way)"><a class="docs-heading-anchor" href="#Automatic-differentiation-(wrong-way)">Automatic differentiation (wrong way)</a><a id="Automatic-differentiation-(wrong-way)-1"></a><a class="docs-heading-anchor-permalink" href="#Automatic-differentiation-(wrong-way)" title="Permalink"></a></h2><p>Now, we want to provide <span>$J_S$</span> to the solver, thanks to the <span>$\texttt{ForwardDiff.jl}$</span> package. This Jacobian is computed with the variational equation, and leads to a false result in our case.</p><p>Details. ( To be removed )</p><p>Denoting <span>$z = (x,p)$</span>, we have </p><p class="math-container">\[    \varphi(t_0, z_0, t_f) = z_0 + \int_{t_0}^{t_f} \vec H\big(\varphi(t_0, z_0, t)\big) \,\mathrm dt. \]</p><p>If we assume that <span>$z_0 \to \varphi(t_0, z_0, t_f)$</span> is differentiable, we have  </p><p class="math-container">\[    \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f)\cdot \delta z_0 =  \delta z_0 + \int_{t_0}^{t_f} \vec H&#39;\big(\varphi(t_0, z_0, t)\big)\cdot \left( \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t) \cdot \delta z_0 \right) \,\mathrm dt, \]</p><p>and so, <span>$z_0 \to \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f)\cdot \delta z_0$</span> is solution of the variational equations</p><p class="math-container">\[    \frac{\partial \delta z}{\partial t}(t) = \vec H&#39;\big(\varphi(t_0, z_0, t_f)\big) \cdot \delta z(t), \qquad \delta z(t_0) = \delta z_0.\]</p><p>In the studied optimal control problem, we have </p><p class="math-container">\[    \vec H(x,p) = (\mathrm{sign}(p), -1) \]</p><p>and so, we have <span>$\vec H&#39;(z) = 0_2$</span> almost everywhere, which implies</p><p class="math-container">\[    \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f) \cdot \delta z_0 = \mathrm{exp}\big((t_f-t_0) 0_2 \big)\cdot \delta z_0 = \delta z_0.\]</p><p>The Jacobian of the shooting function is then given by </p><p class="math-container">\[    S&#39;(p_0) = \pi \left( \frac{\partial \varphi}{\partial p_0}(t_0, x_0, p_0, t_f) \right) = \pi \left( \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f) \cdot (0,1) \right) = \pi(0,1) = 0. \]</p><article class="docstring">
+ * Jacobian Calls (df/dx): 2</code></pre><pre><code class="language-julia hljs">sol = ϕ((t0, tf), x0, p0_sol.x)                             # get the optimal trajectory
+plot(sol)                                                   # plot</code></pre><img src="2D-example-367854fd.svg" alt="Example block output"/><h2 id="Automatic-differentiation-(wrong-way)"><a class="docs-heading-anchor" href="#Automatic-differentiation-(wrong-way)">Automatic differentiation (wrong way)</a><a id="Automatic-differentiation-(wrong-way)-1"></a><a class="docs-heading-anchor-permalink" href="#Automatic-differentiation-(wrong-way)" title="Permalink"></a></h2><p>Now, we want to provide <span>$J_S$</span> to the solver, thanks to the <span>$\texttt{ForwardDiff.jl}$</span> package. This Jacobian is computed with the variational equation, and leads to a false result in our case.</p><p>Details. ( To be removed )</p><p>Denoting <span>$z = (x,p)$</span>, we have </p><p class="math-container">\[    \varphi(t_0, z_0, t_f) = z_0 + \int_{t_0}^{t_f} \vec H\big(\varphi(t_0, z_0, t)\big) \,\mathrm dt. \]</p><p>If we assume that <span>$z_0 \to \varphi(t_0, z_0, t_f)$</span> is differentiable, we have  </p><p class="math-container">\[    \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f)\cdot \delta z_0 =  \delta z_0 + \int_{t_0}^{t_f} \vec H&#39;\big(\varphi(t_0, z_0, t)\big)\cdot \left( \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t) \cdot \delta z_0 \right) \,\mathrm dt, \]</p><p>and so, <span>$z_0 \to \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f)\cdot \delta z_0$</span> is solution of the variational equations</p><p class="math-container">\[    \frac{\partial \delta z}{\partial t}(t) = \vec H&#39;\big(\varphi(t_0, z_0, t_f)\big) \cdot \delta z(t), \qquad \delta z(t_0) = \delta z_0.\]</p><p>In the studied optimal control problem, we have </p><p class="math-container">\[    \vec H(x,p) = (\mathrm{sign}(p), -1) \]</p><p>and so, we have <span>$\vec H&#39;(z) = 0_2$</span> almost everywhere, which implies</p><p class="math-container">\[    \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f) \cdot \delta z_0 = \mathrm{exp}\big((t_f-t_0) 0_2 \big)\cdot \delta z_0 = \delta z_0.\]</p><p>The Jacobian of the shooting function is then given by </p><p class="math-container">\[    S&#39;(p_0) = \pi \left( \frac{\partial \varphi}{\partial p_0}(t_0, x_0, p_0, t_f) \right) = \pi \left( \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f) \cdot (0,1) \right) = \pi(0,1) = 0. \]</p><article class="docstring">
 <header>
     <a class="docstring-article-toggle-button fa-solid fa-chevron-right" href="javascript:;" title="Expand docstring"> </a>
     <span class="docstring-category">Details.</span>
@@ -92,17 +129,31 @@ JS(ξ) = ForwardDiff.jacobian(p -&gt; [S(p[1])], ξ)             # compute jacob
 println(&quot;ξ = &quot;, ξ[1])
 println(&quot;JS(ξ) : &quot;, JS(ξ)[1])</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">ξ = -1.0
 JS(ξ) : 0.0</code></pre><p>However, the solver <span>$\texttt{hybrd1}$</span> uses rank 1 approximation to actualize the Jacobian insted of compute it at each iteration, which imply that it still converges to the solution even if the given Jacobian is completely false.</p><pre><code class="language-julia hljs">JS!(js, ξ) = (js[:] .= JS(ξ); nothing)                      # intermediate function
-p0_sol = fsolve(S!, JS!, ξ, show_trace = true)              # solve</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Results of Nonlinear Solver Algorithm
+p0_sol = fsolve(S!, JS!, ξ, show_trace = true)              # solve
+println(p0_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
+------   --------------   --------------   --------------
+     1     3.000000e+00     0.000000e+00         0.006238
+     2     5.000000e+00     1.000000e+04         0.060365
+     3     5.000000e+00     3.906250e+03         0.000146
+     4     5.000000e+00     3.906250e+03         0.001357
+     5     5.000000e+00     3.906250e+03         0.000099
+     6     5.000000e+00     5.493164e+02         0.000080
+     7     5.000000e+00     7.724762e+01         0.000100
+     8     9.550781e-01     1.086295e+01         0.001118
+     9     2.633355e-08     2.280435e-01         0.000954
+    10     4.034347e-08     1.733639e-16         0.000994
+    11     7.549755e-09     6.346772e-17         0.000989
+Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [-1.0]
  * Zero: [-2.500000011044682]
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 0.106551 seconds
+ * Total time: 0.072453 seconds
  * Function Calls: 11
- * Jacobian Calls (df/dx): 2</code></pre><p>!!! Don&#39;t show the trace !!!</p><pre><code class="language-julia hljs">sol = ϕ((t0, tf), x0, p0_sol.x)                             # get the optimal trajectory
-plt = plot(sol)                                             # plot</code></pre><img src="2D-example-8c496d8e.svg" alt="Example block output"/><h2 id="Automatic-differentiation-(good-way)"><a class="docs-heading-anchor" href="#Automatic-differentiation-(good-way)">Automatic differentiation (good way)</a><a id="Automatic-differentiation-(good-way)-1"></a><a class="docs-heading-anchor-permalink" href="#Automatic-differentiation-(good-way)" title="Permalink"></a></h2><p>The goal is to provide the true Jacobian of <span>$S$</span> by using the <span>$\texttt{ForwardDiff}$</span> package, and so we need to indicate to the solver that the dynamic of the system change when <span>$p = 0$</span>.</p><p>To understang why we need to give this information to the solver, see the following details. </p><p>Details. (To be removed)</p><p>The problem is that the Hamiltonian <span>$H$</span> is not differentiable everywhere due to the maximizing control. This control is bang-bang (<span>$u = 1$</span> and <span>$u = -1$</span>). </p><p>Let now construct the two smooth Hamiltonians associated to these two controls </p><p class="math-container">\[    H^+(x,p) = h(x,p,-1,1) = -x + p \qquad \text{and} \qquad H^-(x,p) = h(x,p,-1,-1) =  -x - p. \]</p><p>Their associated vector fields are given by </p><p class="math-container">\[    \vec H^+(x,p) = (1,1) \qquad \text{and} \qquad \vec H^-(x,p) = (-1, 1), \]</p><p>and their associated flow correspond to </p><p class="math-container">\[    \varphi^+(t_0, z_0, t_f) = z_0 + \left( \begin{array}{c} 1 \\ 1 \end{array} \right) (t_f -t_0)
+ * Jacobian Calls (df/dx): 2</code></pre><pre><code class="language-julia hljs">sol = ϕ((t0, tf), x0, p0_sol.x)                             # get the optimal trajectory
+plt = plot(sol)                                             # plot</code></pre><img src="2D-example-1d185769.svg" alt="Example block output"/><h2 id="Automatic-differentiation-(good-way)"><a class="docs-heading-anchor" href="#Automatic-differentiation-(good-way)">Automatic differentiation (good way)</a><a id="Automatic-differentiation-(good-way)-1"></a><a class="docs-heading-anchor-permalink" href="#Automatic-differentiation-(good-way)" title="Permalink"></a></h2><p>The goal is to provide the true Jacobian of <span>$S$</span> by using the <span>$\texttt{ForwardDiff}$</span> package, and so we need to indicate to the solver that the dynamic of the system change when <span>$p = 0$</span>.</p><p>To understang why we need to give this information to the solver, see the following details. </p><p>Details. (To be removed)</p><p>The problem is that the Hamiltonian <span>$H$</span> is not differentiable everywhere due to the maximizing control. This control is bang-bang (<span>$u = 1$</span> and <span>$u = -1$</span>). </p><p>Let now construct the two smooth Hamiltonians associated to these two controls </p><p class="math-container">\[    H^+(x,p) = h(x,p,-1,1) = -x + p \qquad \text{and} \qquad H^-(x,p) = h(x,p,-1,-1) =  -x - p. \]</p><p>Their associated vector fields are given by </p><p class="math-container">\[    \vec H^+(x,p) = (1,1) \qquad \text{and} \qquad \vec H^-(x,p) = (-1, 1), \]</p><p>and their associated flow correspond to </p><p class="math-container">\[    \varphi^+(t_0, z_0, t_f) = z_0 + \left( \begin{array}{c} 1 \\ 1 \end{array} \right) (t_f -t_0)
     \qquad \text{and} \qquad 
     \varphi^-(t_0, z_0, t_f) = z_0 + \left( \begin{array}{c} -1 \\ \phantom{-} 1 \end{array} \right) (t_f -t_0).\]</p><p>If we assume that the optimal structure of the problem is negative then positive bangs, then the associated flow is defined by  </p><p class="math-container">\[    \varphi(t_0, z_0, t_f) = \varphi^+ \big( t_1(z_0), \varphi^-\big(t_0, z_0, t_1(z_0)\big), t_f \big),\]</p><p>with the following condition </p><p class="math-container">\[    \pi_p \big( \varphi^-(t_0, z_0, t_1(z_0)) \big) = 0,\]</p><p>where <span>$\pi_p(x,p) = p$</span> is the classical <span>$p$</span>-space projection. By devlopping this last condition, an explicit form of the function <span>$t_1(\cdot)$</span> is given by </p><p class="math-container">\[    t_1(x_0, p_0) = t_0 - p_0.\]</p><p>Finally, we have </p><p class="math-container">\[    \begin{align*}
     \frac{\partial \varphi}{\partial z_0} 
@@ -193,16 +244,40 @@ println(&quot;JS(ξ) : &quot;, JShoot(ξ)[1])
 Shoot!(shoot, ξ) = (shoot[:] .= Shoot(ξ[1]); nothing)       # intermediate function
 JShoot!(jshoot, ξ) = (jshoot[:] .= JShoot(ξ); nothing)      # intermediate function
 
-p0_sol = fsolve(Shoot!, JShoot!, ξ, show_trace = true)      # solve</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Results of Nonlinear Solver Algorithm
+p0_sol = fsolve(Shoot!, JShoot!, ξ, show_trace = true)      # solve
+println(p0_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">ξ = -1.0
+JS(ξ) : 2.0000000000000018
+Iter     f(x) inf-norm    Step 2-norm      Step time
+------   --------------   --------------   --------------
+     1     3.000000e+00     0.000000e+00         1.298577
+     2     6.994405e-15     2.250000e+00         0.007679
+     3     4.551914e-15     1.262177e-29         0.000190
+     4     3.441691e-15     1.774937e-30         0.000148
+     5     2.775558e-15     1.972152e-31         0.000149
+     6     3.441691e-15     1.972152e-31         0.000134
+     7     2.775558e-15     1.972152e-31         0.000142
+     8     2.997602e-15     1.774937e-30         0.000297
+     9     1.443290e-15     1.972152e-31         0.000147
+    10     2.997602e-15     7.888609e-31         0.000139
+    11     2.997602e-15     1.972152e-31         0.000145
+    12     2.997602e-15     1.972152e-31         0.000275
+    13     2.997602e-15     1.972152e-31         0.000147
+    14     1.443290e-15     1.972152e-31         0.000130
+    15     2.343750e-02     1.373291e-04         0.000140
+    16     2.997602e-15     1.373291e-04         0.000131
+    17     2.997602e-15     1.972152e-31         0.000140
+    18     1.443290e-15     1.972152e-31         0.000132
+    19     1.464844e-03     5.364418e-07         0.000140
+Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [-1.0]
  * Zero: [-2.5]
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: iteration is not making good progress, measured by improvement from last 10 iterations
- * Total time: 1.347241 seconds
+ * Total time: 1.308996 seconds
  * Function Calls: 19
- * Jacobian Calls (df/dx): 3</code></pre><p>!!! Don&#39;t show the trace !!!</p><pre><code class="language-julia hljs"># get optimal trajectory
+ * Jacobian Calls (df/dx): 3</code></pre><pre><code class="language-julia hljs"># get optimal trajectory
 sol_ = φ((t0, tf), x0, p0_sol.x[1], saveat=range(t0, tf, 500))
 
 # plot
@@ -217,4 +292,4 @@ plt_p = plot(t, p, label = &quot;p&quot;)
 plt_u = plot(t, u, label = &quot;u&quot;)
 
 plt_xp = plot(plt_x, plt_p, layout=(1, 2))
-plot(plt_xp, plt_u, layout = (2, 1))</code></pre><img src="2D-example-126fd4a0.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="index.html">« Introduction</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.5.0 on <span class="colophon-date" title="Monday 12 August 2024 16:51">Monday 12 August 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+plot(plt_xp, plt_u, layout = (2, 1))</code></pre><img src="2D-example-66b689d0.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="index.html">« Introduction</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.5.0 on <span class="colophon-date" title="Tuesday 13 August 2024 07:21">Tuesday 13 August 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
