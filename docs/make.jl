@@ -13,7 +13,8 @@ makedocs(
     ),
     pages = [
         "Introduction" => "index.md",
-        "Indirect shooting"   => "2D-example.md",
+        "Indirect shooting" => "2D-example.md",
+        "Geometric preconditioner" => "2D-preconditioner.md",
     ]
 )
 
