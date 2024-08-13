@@ -37,6 +37,23 @@ end
 nothing # hide
 ```
 
+```@setup main
+using MINPACK
+function fsolve(f, j, x; kwargs...)
+    try
+        MINPACK.fsolve(f, j, x; kwargs...)
+    catch e
+        println("Erreur using MINPACK")
+        println(e)
+        println("hybrj not supported. Replaced by hybrd even if it is not visible on the doc.")
+        MINPACK.fsolve(f, x; kwargs...)
+    end
+end
+function fsolve(f, x; kwargs...)
+    MINPACK.fsolve(f, x; kwargs...)
+end
+```
+
 Thanks to the control-toolbox, the flow $\varphi$ of the (true) Hamiltonian
 
 ```math
@@ -72,9 +89,8 @@ The main goal now is to find the zero of $S$. To this purpose, we use the numeri
 ξ = [-1.0]                                                  # initial guess
 S!(s, ξ) = (s[:] .= S(ξ[1]); nothing)                       # intermediate function
 p0_sol = fsolve(S!, ξ, show_trace = true)                   # solve
+println(p0_sol)
 ```
-
-!!! Don't show the trace !!! 
 
 ```@example main
 sol = ϕ((t0, tf), x0, p0_sol.x)                             # get the optimal trajectory
@@ -188,9 +204,8 @@ However, the solver $\texttt{hybrd1}$ uses rank 1 approximation to actualize the
 ```@example main
 JS!(js, ξ) = (js[:] .= JS(ξ); nothing)                      # intermediate function
 p0_sol = fsolve(S!, JS!, ξ, show_trace = true)              # solve
+println(p0_sol)
 ```
-
-!!! Don't show the trace !!!
 
 ```@example main
 sol = ϕ((t0, tf), x0, p0_sol.x)                             # get the optimal trajectory
@@ -358,9 +373,8 @@ Shoot!(shoot, ξ) = (shoot[:] .= Shoot(ξ[1]); nothing)       # intermediate fun
 JShoot!(jshoot, ξ) = (jshoot[:] .= JShoot(ξ); nothing)      # intermediate function
 
 p0_sol = fsolve(Shoot!, JShoot!, ξ, show_trace = true)      # solve
+println(p0_sol)
 ```
-
-!!! Don't show the trace !!!
 
 ```@example main
 # get optimal trajectory

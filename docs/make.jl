@@ -5,7 +5,7 @@ makedocs(
     sitename = "Geometric preconditioner",
     format = Documenter.HTML(
         prettyurls = false, 
-        #size_threshold_ignore = [""],
+        size_threshold_ignore = ["2D-example.md"],
         assets=[
             asset("https://control-toolbox.org/assets/css/documentation.css"),
             asset("https://control-toolbox.org/assets/js/documentation.js"),
