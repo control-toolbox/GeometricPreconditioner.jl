@@ -194,8 +194,13 @@ where $r$ and $s$ correspond respectively to the rotation and the scale matrix, 
 
 and where $\beta_0 = \arctan \left(\frac{a \sin(\theta)}{b \cos(\theta)} \right)$. 
 
-```@example main 
-function fit_ellipse(x, y)
+```@raw html
+<article class="docstring">
+<header>
+    <a class="docstring-article-toggle-button fa-solid fa-chevron-right" href="javascript:;" title="Expand docstring"> </a>
+    <code>fit_ellipse</code> — <span class="docstring-category">Function</span>
+</header>
+<section style="display: none;"><div><pre><code class="language-julia hljs">function fit_ellipse(x, y)
     M = hcat(x.^2, x.*y, y.^2, x, y)                            # quadratic form of ellipse
     p = M\ones(length(x))                                       # fit parameters for the ellipse
     A, B, C, D, E = p
@@ -208,8 +213,27 @@ function fit_ellipse(x, y)
     θ = atan(-B, C-A)/2
     c = [(2*C*D - B*E)/Δ, (2*A*E - B*D)/Δ]
     return a, b, -θ+Base.π/2, c
-end
+end</code><button class="copy-button fa-solid fa-copy" aria-label="Copy this code ;opblock" title="Copy"></button></pre></div>
+</section>
+</article>
 ```
+
+```@example main
+function fit_ellipse(x, y) # hide
+    M = hcat(x.^2, x.*y, y.^2, x, y) # hide
+    p = M\ones(length(x)) # hide
+    A, B, C, D, E = p # hide
+    F = -1.0 # hide
+    Δ = B^2 - 4*A*C # hide
+    Λ = (A-C)^2 + B^2 # hide
+    b, a = [-sqrt(clamp( 2*(A*E^2 + C*D^2 - B*D*E + Δ*F) * ( (A+C) + op(sqrt(Λ)) ), 0, Inf)) / Δ   for op in (+, -)] # hide
+    θ = atan(-B, C-A)/2 # hide
+    c = [(2*C*D - B*E)/Δ, (2*A*E - B*D)/Δ] # hide
+    return a, b, -θ+Base.π/2, c # hide
+end # hide
+nothing # hide
+```
+
 
 ```@example main
 n = 15                                                          # number of points for fit : 2n

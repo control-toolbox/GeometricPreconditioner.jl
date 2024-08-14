@@ -12,3 +12,13 @@ We consider the following optimal control problem
 ```
 
 with $x_0$, $t_0$, $x_f$ and $t_f$ fixed. This problem is simple, and can be analytically solve without the use of numerical method. However, the goal is to solve this problem by indirect shooting.  
+
+# Dependencies
+
+All the numerical simulations to generate this documentation from `MRI.jl` are performed with 
+the following packages.
+
+```@example
+using Pkg
+Pkg.status()
+```
