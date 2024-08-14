@@ -6,14 +6,16 @@ We introduce the pseudo-Hamiltonian
     h(x,p,p^0,u) = p^0 x + p u.
 ```
 
-For the sake of simplicity, we consider in this notebook only the normal case, and we fix $p^0 = -1$. According to the Pontryagin maximum principle, the maximizing control is given by $u(x,p) \to \mathrm{sign}(p)$. This function is non-differentiable, and may lead to numerical issues.  
+For the sake of simplicity, we assume that the BC-extremals associated to the solution of the studied problem is normal, and so we fix $p^0 = -1$. According to the Pontryagin maximum principle, the maximizing control is given by $u(x,p) \to \mathrm{sign}(p)$. This function is non-differentiable, and may lead to numerical issues.  
+
+Let's start by defining the problem. 
 
 ```@example main
-using OptimalControl # hide
-using Plots # hide
-using ForwardDiff # hide
-using DifferentialEquations # hide
-using MINPACK # hide
+using OptimalControl 
+using Plots 
+using ForwardDiff 
+using DifferentialEquations 
+using MINPACK 
 
 t0 = 0                                                      # initial time
 x0 = 0                                                      # initial state
@@ -101,44 +103,6 @@ plot(sol)                                                   # plot
 
 Now, we want to provide $J_S$ to the solver, thanks to the $\texttt{ForwardDiff.jl}$ package. This Jacobian is computed with the variational equation, and leads to a false result in our case.
 
-Details. ( To be removed )
-
-Denoting $z = (x,p)$, we have 
-
-```math
-    \varphi(t_0, z_0, t_f) = z_0 + \int_{t_0}^{t_f} \vec H\big(\varphi(t_0, z_0, t)\big) \,\mathrm dt. 
-```
-
-If we assume that $z_0 \to \varphi(t_0, z_0, t_f)$ is differentiable, we have  
-
-```math
-    \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f)\cdot \delta z_0 =  \delta z_0 + \int_{t_0}^{t_f} \vec H'\big(\varphi(t_0, z_0, t)\big)\cdot \left( \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t) \cdot \delta z_0 \right) \,\mathrm dt, 
-```
-
-and so, $z_0 \to \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f)\cdot \delta z_0$ is solution of the variational equations
-
-```math
-    \frac{\partial \delta z}{\partial t}(t) = \vec H'\big(\varphi(t_0, z_0, t_f)\big) \cdot \delta z(t), \qquad \delta z(t_0) = \delta z_0.
-```
-
-In the studied optimal control problem, we have 
-
-```math
-    \vec H(x,p) = (\mathrm{sign}(p), -1) 
-```
-
-and so, we have $\vec H'(z) = 0_2$ almost everywhere, which implies
-
-```math
-    \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f) \cdot \delta z_0 = \mathrm{exp}\big((t_f-t_0) 0_2 \big)\cdot \delta z_0 = \delta z_0.
-```
-
-The Jacobian of the shooting function is then given by 
-
-```math
-    S'(p_0) = \pi \left( \frac{\partial \varphi}{\partial p_0}(t_0, x_0, p_0, t_f) \right) = \pi \left( \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f) \cdot (0,1) \right) = \pi(0,1) = 0. 
-```
-
 ```@raw html
 <article class="docstring">
 <header>
@@ -146,7 +110,7 @@ The Jacobian of the shooting function is then given by
     <span class="docstring-category">Details.</span>
 </header>
 <section style="display: none;">
- <p>Denoting <span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">z = (x,p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.4306em;"></span><span class="mord mathnormal" style="margin-right: 0.044em;">z</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></span></span>, we have </p>
+ <p>Denoting <span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>z</mi><mn>0</mn></msub><mo>=</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>p</mi><mn>0</mn></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">z_0 = (x_0,p_0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.5806em; vertical-align: -0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.044em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: -0.044em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></span> the initial state costate couple, we have </p>
  <p class="math-container"><span><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>φ</mi><mo stretchy="false">(</mo><msub><mi>t</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>z</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>t</mi><mi>f</mi></msub><mo stretchy="false">)</mo><mo>=</mo><msub><mi>z</mi><mn>0</mn></msub><mo>+</mo><msubsup><mo>∫</mo><msub><mi>t</mi><mn>0</mn></msub><msub><mi>t</mi><mi>f</mi></msub></msubsup><mover accent="true"><mi>H</mi><mo>⃗</mo></mover><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><mi>φ</mi><mo stretchy="false">(</mo><msub><mi>t</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>z</mi><mn>0</mn></msub><mo separator="true">,</mo><mi>t</mi><mo stretchy="false">)</mo><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo> <mi mathvariant="normal">d</mi><mi>t</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">    \varphi(t_0, z_0, t_f) = z_0 + \int_{t_0}^{t_f} \vec H\big(\varphi(t_0, z_0, t)\big) \,\mathrm dt. </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1.0361em; vertical-align: -0.2861em;"></span><span class="mord mathnormal">φ</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.044em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: -0.044em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3361em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right: 0.1076em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.2861em;"><span class=""></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 0.7333em; vertical-align: -0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.044em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: -0.044em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 2.5555em; vertical-align: -1.012em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right: 0.4445em; position: relative; top: -0.0011em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.5435em;"><span class="" style="top: -1.7881em; margin-left: -0.4445em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3173em;"><span class="" style="top: -2.357em; margin-left: 0em; margin-right: 0.0714em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.143em;"><span class=""></span></span></span></span></span></span></span></span></span><span class="" style="top: -3.8129em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3448em;"><span class="" style="top: -2.3488em; margin-left: 0em; margin-right: 0.0714em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right: 0.1076em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.2901em;"><span class=""></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.012em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.9663em;"><span class="" style="top: -3em;"><span class="pstrut" style="height: 3em;"></span><span class="mord mathnormal" style="margin-right: 0.0813em;">H</span></span><span class="" style="top: -3.2523em;"><span class="pstrut" style="height: 3em;"></span><span class="accent-body" style="left: -0.1799em;"><span class="overlay" style="height: 0.714em; width: 0.471em;"><svg width="0.471em" height="0.714em" style="width:0.471em" viewBox="0 0 471 714" preserveAspectRatio="xMinYMin"><path d="M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
 3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
 10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
@@ -199,7 +163,7 @@ println("ξ = ", ξ[1])
 println("JS(ξ) : ", JS(ξ)[1])
 ```
 
-However, the solver $\texttt{hybrd1}$ uses rank 1 approximation to actualize the Jacobian insted of compute it at each iteration, which imply that it still converges to the solution even if the given Jacobian is completely false.
+However, the solver $\texttt{hybrd1}$ uses rank 1 approximations to actualize the Jacobian insted of compute it at each iteration, which imply that it still converges to the solution even if the given Jacobian is completely false.
 
 ```@example main
 JS!(js, ξ) = (js[:] .= JS(ξ); nothing)                      # intermediate function
@@ -216,69 +180,7 @@ plt = plot(sol)                                             # plot
 
 The goal is to provide the true Jacobian of $S$ by using the $\texttt{ForwardDiff}$ package, and so we need to indicate to the solver that the dynamic of the system change when $p = 0$.
 
-To understang why we need to give this information to the solver, see the following details. 
-
-Details. (To be removed)
-
-The problem is that the Hamiltonian $H$ is not differentiable everywhere due to the maximizing control. This control is bang-bang ($u = 1$ and $u = -1$). 
- 
-Let now construct the two smooth Hamiltonians associated to these two controls 
-
-```math
-    H^+(x,p) = h(x,p,-1,1) = -x + p \qquad \text{and} \qquad H^-(x,p) = h(x,p,-1,-1) =  -x - p. 
-```
-
-Their associated vector fields are given by 
-
-```math
-    \vec H^+(x,p) = (1,1) \qquad \text{and} \qquad \vec H^-(x,p) = (-1, 1), 
-```
-
-and their associated flow correspond to 
-
-```math
-    \varphi^+(t_0, z_0, t_f) = z_0 + \left( \begin{array}{c} 1 \\ 1 \end{array} \right) (t_f -t_0)
-    \qquad \text{and} \qquad 
-    \varphi^-(t_0, z_0, t_f) = z_0 + \left( \begin{array}{c} -1 \\ \phantom{-} 1 \end{array} \right) (t_f -t_0).
-```
-
-If we assume that the optimal structure of the problem is negative then positive bangs, then the associated flow is defined by  
-
-```math
-    \varphi(t_0, z_0, t_f) = \varphi^+ \big( t_1(z_0), \varphi^-\big(t_0, z_0, t_1(z_0)\big), t_f \big),
-```
-
-with the following condition 
-
-```math
-    \pi_p \big( \varphi^-(t_0, z_0, t_1(z_0)) \big) = 0,
-```
-
-where $\pi_p(x,p) = p$ is the classical $p$-space projection. By devlopping this last condition, an explicit form of the function $t_1(\cdot)$ is given by 
-
-```math
-    t_1(x_0, p_0) = t_0 - p_0.
-```
-
-Finally, we have 
-
-```math
-    \begin{align*}
-    \frac{\partial \varphi}{\partial z_0} 
-    &= \frac{\partial \varphi^+}{\partial t_0} \frac{\partial t_1}{\partial z_0} + \frac{\varphi^+}{\partial z_0} \left( \frac{\partial \varphi^-}{\partial z_0} + \frac{\partial \varphi^-}{\partial t_f} \frac{\partial t_1}{\partial z_0} \right) \\
-    &= \left( \begin{array}{c} -1 \\ -1 \end{array} \right) \left( \begin{array}{cc}0 & -1 \end{array} \right) + \left( \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right) \left[
-    \left( \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right) + \left( \begin{array}{c} -1 \\ \phantom - 1 \end{array} \right) \left( \begin{array}{cc}0 & -1 \end{array} \right)
-    \right] \\
-    &= \left( \begin{array}{cc} 0 & 1 \\ 0 & 1 \end{array} \right) + \left( \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right) + \left( \begin{array}{cc} 0 & \phantom -1 \\ 0 & -1 \end{array} \right) \\ 
-    &= \left( \begin{array}{cc} 1 & 2 \\ 0 & 1 \end{array} \right)
-    \end{align*}
-```
-
-and so, we have that 
-
-```math
-    S'(p_0) = \pi \left( \frac{\partial \varphi}{\partial p_0}(t_0, x_0, p_0, t_f) \right) = \pi \left( \frac{\partial \varphi}{\partial z_0}(t_0, z_0, t_f) \cdot (0,1) \right) = \pi(2,1) = 2.
-```
+To understand why we need to give this information to the solver, see the following details. 
 
 ```@raw html
 <article class="docstring">
