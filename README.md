@@ -15,7 +15,7 @@
 Geometric preconditioner for indirect shooting
 
 This repo is part of the [control-toolbox ecosystem](https://github.com/control-toolbox). 
-The control-toolbox ecosystem gathers `Julia` packages for mathematical control and applications. The root package is [`OptimalControl.jl`](https://github.com/control-toolbox/OptimalControl.jl) which aims to provide tools to modelise and solve optimal control problems by direct and indirect methods. [![doc OptimalControl.jl](https://img.shields.io/badge/doc-OptimalControl.jl-blue)](http://control-toolbox.org/OptimalControl.jl)
+The control-toolbox ecosystem gathers Julia packages for mathematical control and applications. The root package is [OptimalControl.jl](https://github.com/control-toolbox/OptimalControl.jl) which aims to provide tools to modelise and solve optimal control problems by direct and indirect methods. [![doc OptimalControl.jl](https://img.shields.io/badge/doc-OptimalControl.jl-blue)](http://control-toolbox.org/OptimalControl.jl)
 
 | **Documentation**  | **Code Status**  |
 |:-------------------|:-----------------|
