@@ -15,7 +15,7 @@ with $x_0$, $t_0$, $x_f$ and $t_f$ fixed. This problem is simple, and can be ana
 
 # Dependencies
 
-All the numerical simulations to generate this documentation from `MRI.jl` are performed with 
+All the numerical simulations to generate this documentation are performed with 
 the following packages.
 
 ```@example
