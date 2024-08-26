@@ -3,7 +3,7 @@ name: Blank issue
 about: Blank template for general issue
 title: "[General] title"
 labels: ''
-assignees: remydutto, ocots
+assignees: ocots, remydutto
 
 ---
 
