@@ -1,4 +1,4 @@
 name = "GeometricPreconditioner"
 uuid = "4fb4c77a-c2a1-4666-8b47-e5158870c0af"
 authors = ["Olivier Cots <olivier.cots@irit.fr>"]
-version = "0.2.0"
+version = "0.1.1"
