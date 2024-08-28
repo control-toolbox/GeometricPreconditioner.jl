@@ -93,23 +93,23 @@ JS₂!(js₂, ξ) = (js₂[:] .= JS₂(ξ); nothing)                      # inte
 p0_sol = fsolve(S₂!, JS₂!, ξ, show_trace = true)                # solve
 println(p0_sol)                                                 # print solution</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     3.845299e+00     0.000000e+00         0.003634
-     2     5.000000e+00     1.559496e+00         4.758116
-     3     5.000000e+00     4.983094e-01         0.000082
-     4     5.000000e+00     4.983094e-01         0.000398
-     5     5.000000e+00     4.983094e-01         0.000027
-     6     2.825589e+00     9.417471e-02         0.000287
-     7     3.275582e+00     5.569993e-02         0.000202
-     8     1.835694e+00     1.605481e-02         0.000190
-     9     5.000000e+00     4.108358e-02         0.000028
-    10     8.767661e-01     2.198078e-02         0.000175
-    11     1.052824e+00     2.476848e-03         0.000184
-    12     2.252319e-01     7.373618e-04         0.000172
-    13     6.733089e-02     6.111140e-05         0.000179
-    14     4.061534e-03     3.236777e-06         0.000170
-    15     6.974839e-05     1.047584e-08         0.000178
-    16     7.333033e-08     3.198326e-12         0.000170
-    17     1.322831e-12     3.527840e-18         0.000182
+     1     3.845299e+00     0.000000e+00         0.003457
+     2     5.000000e+00     1.559496e+00         5.000067
+     3     5.000000e+00     4.983094e-01         0.000084
+     4     5.000000e+00     4.983094e-01         0.000396
+     5     5.000000e+00     4.983094e-01         0.000034
+     6     2.825589e+00     9.417471e-02         0.000253
+     7     3.275582e+00     5.569993e-02         0.000195
+     8     1.835694e+00     1.605481e-02         0.000184
+     9     5.000000e+00     4.108358e-02         0.000027
+    10     8.767661e-01     2.198078e-02         0.000173
+    11     1.052824e+00     2.476848e-03         0.000178
+    12     2.252319e-01     7.373618e-04         0.000171
+    13     6.733089e-02     6.111140e-05         0.000174
+    14     4.061534e-03     3.236777e-06         0.000166
+    15     6.974839e-05     1.047584e-08         0.000171
+    16     7.333033e-08     3.198326e-12         0.000161
+    17     1.322831e-12     3.527840e-18         0.000168
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [-0.5]
@@ -117,7 +117,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 4.764388 seconds
+ * Total time: 5.006073 seconds
  * Function Calls: 17
  * Jacobian Calls (df/dx): 2</code></pre><pre><code class="language-julia hljs">sol = ϕ((t0, tf), x0, [η(p0_sol.x[1]), p0_sol.x[1]],
     saveat=range(t0, tf, 500))                                  # get optimal trajectory
@@ -137,7 +137,7 @@ plt_p  = plot(t, p , label = &quot;p&quot; )
 plt_u  = plot(t, u,  label = &quot;u&quot; )
 
 plt_xp = plot(plt_x⁰, plt_p⁰, plt_x, plt_p, layout=(2, 2))
-plot(plt_xp, plt_u, layout = grid(2,1, heights = [2/3, 1/3]), size=(700, 600))</code></pre><img src="2D-preconditioner-844b5c7d.svg" alt="Example block output"/><h1 id="Construction-of-the-geometric-preconditioner"><a class="docs-heading-anchor" href="#Construction-of-the-geometric-preconditioner">Construction of the geometric preconditioner</a><a id="Construction-of-the-geometric-preconditioner-1"></a><a class="docs-heading-anchor-permalink" href="#Construction-of-the-geometric-preconditioner" title="Permalink"></a></h1><p>The goal is now to use the geometric preconditioning method proposed in [mettre article]. For this purpose, the first step is to create some points in the boundary of the accessible augmented set, and to fit an ellipse on these points. </p><p>The second step is to create the linear diffeomorphism <span>$\phi \colon \mathbb R^2 \to \mathbb R^2, (x^0,x_1) \to Ax + B$</span> that transforms the fitted ellipse into the unit circle, and that satisfy the condition </p><p class="math-container">\[    \frac{\partial \phi}{\partial x^0} = k e_1, \]</p><p>with <span>$k&gt;0$</span> and <span>$e_1 = (1,0)$</span>. In this context, we denote </p><p class="math-container">\[    A = \left( \begin{array}{cc} k &amp; A_{x^0} \\ 0 &amp; A_{x_1} \end{array} \right)
+plot(plt_xp, plt_u, layout = grid(2,1, heights = [2/3, 1/3]), size=(700, 600))</code></pre><img src="2D-preconditioner-244afeef.svg" alt="Example block output"/><h1 id="Construction-of-the-geometric-preconditioner"><a class="docs-heading-anchor" href="#Construction-of-the-geometric-preconditioner">Construction of the geometric preconditioner</a><a id="Construction-of-the-geometric-preconditioner-1"></a><a class="docs-heading-anchor-permalink" href="#Construction-of-the-geometric-preconditioner" title="Permalink"></a></h1><p>The goal is now to use the geometric preconditioning method proposed in [mettre article]. For this purpose, the first step is to create some points in the boundary of the accessible augmented set, and to fit an ellipse on these points. </p><p>The second step is to create the linear diffeomorphism <span>$\phi \colon \mathbb R^2 \to \mathbb R^2, (x^0,x_1) \to Ax + B$</span> that transforms the fitted ellipse into the unit circle, and that satisfy the condition </p><p class="math-container">\[    \frac{\partial \phi}{\partial x^0} = k e_1, \]</p><p>with <span>$k&gt;0$</span> and <span>$e_1 = (1,0)$</span>. In this context, we denote </p><p class="math-container">\[    A = \left( \begin{array}{cc} k &amp; A_{x^0} \\ 0 &amp; A_{x_1} \end{array} \right)
     \qquad \text{and} \qquad 
     B = \left( \begin{array}{c} B_{x^0} \\ B_{x_1} \end{array} \right).\]</p><p>This diffeomorphism is given from the semi-axis <span>$a,b &gt;0$</span>, the angle <span>$\theta \in [0, \frac{\pi}{2}[$</span> between the semi-axis <span>$b$</span> and the <span>$x$</span>-axis, and the center <span>$c \in \mathbb R^2$</span> by </p><p class="math-container">\[    \phi(x) = r(-\beta_0) s(a^{-1}, b^{-1}) r(\theta) (x - c),\]</p><p>where <span>$r$</span> and <span>$s$</span> correspond respectively to the rotation and the scale matrix, defined by </p><p class="math-container">\[    r(\theta) = \left( \begin{array}{cc} \phantom - \cos(\theta) &amp; \sin(\theta) \\ -\sin(\theta) &amp; \cos(\theta) \end{array} \right)
     \qquad \text{and} \qquad
@@ -202,7 +202,7 @@ scatter!(y[2,:], y[1,:], label=&quot;&quot;)
 plot!(yₑ[2,:], yₑ[1,:], label = &quot;&quot;)
 plot!( xlabel = &quot;y&quot;, ylabel = &quot;y⁰&quot;)
 
-plot(plt_x, plt_y, layout = (1,2), size=(800, 400))</code></pre><img src="2D-preconditioner-49b311f7.svg" alt="Example block output"/><p>The general shooting function <span>$T \colon \mathbb R^2 \to \mathbb R$</span> in the new coordinate is defined by </p><p class="math-container">\[    T(q) = A_{x_1} \varphi \big(t_0, x_0, p_0(A^\top q), t_f) + B_{x_1} - y_T,\]</p><p>where the function <span>$p_0 \colon \mathbb R^2 \to \mathbb R^2$</span> correspond to the mapping between the final and the initial augmented costate, and is given by</p><p class="math-container">\[    p_0(p^0, p_1) = (p^0, p_1 + p^0 t_f),\]</p><p>and <span>$y_T = A_{x_1} x_T + B_x$</span> to the target in the new system of coordinates. By using the definition of <span>$S$</span> and <span>$y_T$</span>, we obtain </p><p class="math-container">\[\begin{align*}
+plot(plt_x, plt_y, layout = (1,2), size=(800, 400))</code></pre><img src="2D-preconditioner-1f80f13e.svg" alt="Example block output"/><p>The general shooting function <span>$T \colon \mathbb R^2 \to \mathbb R$</span> in the new coordinate is defined by </p><p class="math-container">\[    T(q) = A_{x_1} \varphi \big(t_0, x_0, p_0(A^\top q), t_f) + B_{x_1} - y_T,\]</p><p>where the function <span>$p_0 \colon \mathbb R^2 \to \mathbb R^2$</span> correspond to the mapping between the final and the initial augmented costate, and is given by</p><p class="math-container">\[    p_0(p^0, p_1) = (p^0, p_1 + p^0 t_f),\]</p><p>and <span>$y_T = A_{x_1} x_T + B_x$</span> to the target in the new system of coordinates. By using the definition of <span>$S$</span> and <span>$y_T$</span>, we obtain </p><p class="math-container">\[\begin{align*}
     T(q) &amp;= A_{x_1} \varphi \big(t_0, x_0, p_0(A^\top q), t_f) + B_{x_1} - (A_{x_1} x_T + B_{x_1}) \\
     &amp;= A_{x_1} (S \circ p_0)(A^\top q).
 \end{align*}\]</p><p>which highlight that the proposed geometric preconditioning method is a left and right side preconditioner of the shooting function. Finally, we define the two shooting functions <span>$T_1$</span> and <span>$T_2$</span> by using the two method of normalization used before for the function <span>$S$</span> </p><p class="math-container">\[    T_1(p) = T(-1, p) \qquad \text{and} \qquad T_2(p) = T \big(\eta(p), p \big).\]</p><pre><code class="language-julia hljs">p₀(p) = [p[1], p[2] + p[1]*tf]                                  # function p₀(⋅)
@@ -248,24 +248,24 @@ JT₂!(jt₂, ξ) = (jt₂[:] .= JT₂(ξ); nothing)                      # inte
 q_sol = fsolve(T₂!, JT₂!, ξ, show_trace = true)                 # solve
 println(q_sol)                                                  # print solution</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     3.223430e-01     0.000000e+00         0.000497
-     2     7.034101e-02     1.406250e-01         5.420823
-     3     1.135104e-02     1.095650e-02         0.000292
-     4     1.033639e-04     4.056828e-04         0.000202
-     5     2.155036e-08     3.426091e-08         0.000202
-     6     8.398089e-16     1.489880e-15         0.000184
-     7     3.119290e-16     2.262576e-30         0.000198
-     8     2.399454e-17     1.659615e-31         0.000190
-     9     2.399454e-17     1.152511e-33         0.000203
-    10     3.119290e-16     1.947743e-31         0.000191
-    11     2.399454e-17     2.028246e-31         0.000512
-    12     2.399454e-17     2.097361e-32         0.000214
-    13     2.399454e-17     2.593149e-33         0.000213
-    14     2.399454e-17     6.482873e-34         0.000207
-    15     2.399454e-17     1.620718e-34         0.000207
-    16     2.399454e-17     4.051796e-35         0.000219
-    17     2.399454e-17     1.012949e-35         0.000214
-    18     2.399454e-17     2.532372e-36         0.000185
+     1     3.223430e-01     0.000000e+00         0.000451
+     2     7.034101e-02     1.406250e-01         5.025891
+     3     1.135104e-02     1.095650e-02         0.000284
+     4     1.033639e-04     4.056828e-04         0.000203
+     5     2.155036e-08     3.426091e-08         0.000188
+     6     8.398089e-16     1.489880e-15         0.000174
+     7     3.119290e-16     2.262576e-30         0.000181
+     8     2.399454e-17     1.659615e-31         0.000171
+     9     2.399454e-17     1.152511e-33         0.000180
+    10     3.119290e-16     1.947743e-31         0.000170
+    11     2.399454e-17     2.028246e-31         0.000483
+    12     2.399454e-17     2.097361e-32         0.000179
+    13     2.399454e-17     2.593149e-33         0.000180
+    14     2.399454e-17     6.482873e-34         0.000168
+    15     2.399454e-17     1.620718e-34         0.000194
+    16     2.399454e-17     4.051796e-35         0.000175
+    17     2.399454e-17     1.012949e-35         0.000181
+    18     2.399454e-17     2.532372e-36         0.000165
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [0.5]
@@ -273,7 +273,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: iteration is not making good progress, measured by improvement from last 10 iterations
- * Total time: 5.424981 seconds
+ * Total time: 5.029644 seconds
  * Function Calls: 18
  * Jacobian Calls (df/dx): 2</code></pre><pre><code class="language-julia hljs">p0_sol = p₀(transpose(A)*[η(q_sol.x[1]), q_sol.x[1]])           # get the optimal initial costate in old coordinates
 sol = ϕ((t0, tf), x0, p0_sol, saveat=range(t0, tf, 500))        # get optimal trajectory
@@ -293,7 +293,7 @@ plt_p  = plot(t, p , label = &quot;p&quot; )
 plt_u  = plot(t, u,  label = &quot;u&quot; )
 
 plt_xp = plot(plt_x⁰, plt_p⁰, plt_x, plt_p, layout=(2, 2))
-plot(plt_xp, plt_u, layout = grid(2,1, heights = [2/3, 1/3]), size=(700, 600))</code></pre><img src="2D-preconditioner-0595a230.svg" alt="Example block output"/><h1 id="Comparison"><a class="docs-heading-anchor" href="#Comparison">Comparison</a><a id="Comparison-1"></a><a class="docs-heading-anchor-permalink" href="#Comparison" title="Permalink"></a></h1><p>It is shown in [mettre article] that if the boundary of augmented accessible set is the fitted ellipse then the shooting function <span>$T_2$</span> is the identity function. Due to the error of the approximation, the function <span>$T_2$</span> is not the identity, but we hope that this function is close to this ideal function, and so that the convergence of <span>$T_2$</span> is faster than the one of <span>$S_2$</span>. </p><p>The following code compares the convergence of these two shooting function. We also study for these functions the domain of initial guesses for the solver that hit the bounds <span>$[-1, 1]$</span> during the solving process. </p><pre><code class="language-julia hljs">## initial guesses
+plot(plt_xp, plt_u, layout = grid(2,1, heights = [2/3, 1/3]), size=(700, 600))</code></pre><img src="2D-preconditioner-c20428e4.svg" alt="Example block output"/><h1 id="Comparison"><a class="docs-heading-anchor" href="#Comparison">Comparison</a><a id="Comparison-1"></a><a class="docs-heading-anchor-permalink" href="#Comparison" title="Permalink"></a></h1><p>It is shown in [mettre article] that if the boundary of augmented accessible set is the fitted ellipse then the shooting function <span>$T_2$</span> is the identity function. Due to the error of the approximation, the function <span>$T_2$</span> is not the identity, but we hope that this function is close to this ideal function, and so that the convergence of <span>$T_2$</span> is faster than the one of <span>$S_2$</span>. </p><p>The following code compares the convergence of these two shooting function. We also study for these functions the domain of initial guesses for the solver that hit the bounds <span>$[-1, 1]$</span> during the solving process. </p><pre><code class="language-julia hljs">## initial guesses
 N = 1000; ξ = range(-1.,1.,N)
 
 # initialization of the matrix
@@ -368,4 +368,4 @@ scatter!(1,1, markercolor = :blue, markerstrokecolor = :blue, marker = 2, label 
 scatter!(1,1, markercolor = :red, markerstrokecolor = :red, marker = 2, label = &quot;not converged&quot;)
 
 plt_2 = plot(plt_21, plt_22, layout = (1,2))
-plot(plt_1, plt_2, layout = grid(2,1, heights = [0.5, 0.5]), size=(700, 600))</code></pre><img src="2D-preconditioner-190ba595.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="2D-example.html">« Indirect shooting</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.6.0 on <span class="colophon-date" title="Wednesday 28 August 2024 08:28">Wednesday 28 August 2024</span>. Using Julia version 1.10.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+plot(plt_1, plt_2, layout = grid(2,1, heights = [0.5, 0.5]), size=(700, 600))</code></pre><img src="2D-preconditioner-6e6b56db.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="2D-example.html">« Indirect shooting</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.6.0 on <span class="colophon-date" title="Wednesday 28 August 2024 20:14">Wednesday 28 August 2024</span>. Using Julia version 1.10.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
