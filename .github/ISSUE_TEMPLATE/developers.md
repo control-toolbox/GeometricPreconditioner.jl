@@ -1,8 +1,8 @@
 ---
-name: 'Developers '
+name: 'Developers'
 about: Suggest internal modifications
 title: "[Dev] title"
-labels: ''
+labels: internal dev
 assignees: ocots, remydutto
 
 ---
