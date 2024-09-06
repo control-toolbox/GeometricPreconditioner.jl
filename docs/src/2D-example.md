@@ -284,9 +284,9 @@ sol_ = φ((t0, tf), x0, p0_sol.x[1], saveat=range(t0, tf, 500))
 
 # plot
 sol = OptimalControl.OptimalControlSolution(sol_)
-t = sol.times
-x = sol.state
-p = sol.costate
+t = time_grid(sol)
+x = state(sol)
+p = costate(sol)
 u = sign ∘ p
 
 plt_x = plot(t, x, label = "x")
