@@ -1,19 +1,19 @@
 # Geometric preconditioner for indirect shooting
 
-[ci-img]: https://github.com/control-toolbox/preconditioning/actions/workflows/CI.yml/badge.svg?branch=main
-[ci-url]: https://github.com/control-toolbox/preconditioning/actions/workflows/CI.yml?query=branch%3Amain
+[ci-img]: https://github.com/control-toolbox/GeometricPreconditioner.jl/actions/workflows/CI.yml/badge.svg?branch=main
+[ci-url]: https://github.com/control-toolbox/GeometricPreconditioner.jl/actions/workflows/CI.yml?query=branch%3Amain
 
-[co-img]: https://codecov.io/gh/control-toolbox/preconditioning/branch/main/graph/badge.svg?token=YM5YQQUSO3
-[co-url]: https://codecov.io/gh/control-toolbox/preconditioning
+[co-img]: https://codecov.io/gh/control-toolbox/GeometricPreconditioner.jl/branch/main/graph/badge.svg?token=YM5YQQUSO3
+[co-url]: https://codecov.io/gh/control-toolbox/GeometricPreconditioner.jl
 
 [doc-dev-img]: https://img.shields.io/badge/docs-dev-8A2BE2.svg
-[doc-dev-url]: https://control-toolbox.org/preconditioning/dev/
+[doc-dev-url]: https://control-toolbox.org/GeometricPreconditioner.jl/dev/
 
 [doc-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
-[doc-stable-url]: https://control-toolbox.org/preconditioning/stable/
+[doc-stable-url]: https://control-toolbox.org/GeometricPreconditioner.jl/stable/
 
 [licence-img]: https://img.shields.io/badge/License-MIT-yellow.svg
-[licence-url]: https://github.com/control-toolbox/preconditioning/blob/master/LICENSE
+[licence-url]: https://github.com/control-toolbox/GeometricPreconditioner.jl/blob/master/LICENSE
 
 [aqua-img]: https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg
 [aqua-url]: https://github.com/JuliaTesting/Aqua.jl
@@ -31,8 +31,8 @@ The control-toolbox ecosystem gathers Julia packages for mathematical control an
 
 ## Contributing
 
-[issue-url]: https://github.com/control-toolbox/preconditioning/issues
-[first-good-issue-url]: https://github.com/control-toolbox/preconditioning/contribute
+[issue-url]: https://github.com/control-toolbox/GeometricPreconditioner.jl/issues
+[first-good-issue-url]: https://github.com/control-toolbox/GeometricPreconditioner.jl/contribute
 
 If you think you found a bug or if you have a feature request / suggestion, feel free to open an [issue][issue-url].
 Before opening a pull request, please start an issue or a discussion on the topic. 

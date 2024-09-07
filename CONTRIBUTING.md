@@ -1,7 +1,7 @@
 # Contributing
 
-[issue-url]: https://github.com/control-toolbox/preconditioning/issues
-[first-good-issue-url]: https://github.com/control-toolbox/preconditioning/contribute
+[issue-url]: https://github.com/control-toolbox/GeometricPreconditioner.jl/issues
+[first-good-issue-url]: https://github.com/control-toolbox/GeometricPreconditioner.jl/contribute
 
 If you think you found a bug or if you have a feature request / suggestion, feel free to open an [issue][issue-url].
 Before opening a pull request, please start an issue or a discussion on the topic. 

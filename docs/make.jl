@@ -18,4 +18,4 @@ makedocs(
     ],
 )
 
-deploydocs(repo = "github.com/control-toolbox/preconditioning.git", devbranch = "main")
+deploydocs(repo = "github.com/control-toolbox/GeometricPreconditioner.jl.git", devbranch = "main")

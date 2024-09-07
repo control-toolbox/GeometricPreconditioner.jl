@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Preconditioning application support
-    url: https://github.com/control-toolbox/preconditioning/discussions
-    about: Please ask and answer questions about preconditioning application here.
+  - name: GeometricPreconditioner.jl application support
+    url: https://github.com/control-toolbox/GeometricPreconditioner.jl/discussions
+    about: Please ask and answer questions about GeometricPreconditioner.jl application here.
   - name: Control-toolbox organisation support
     url: https://github.com/orgs/control-toolbox/discussions
     about: For more general questions about control-toolbox ecosystem it's here.
