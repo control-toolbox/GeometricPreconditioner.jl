@@ -1,9 +1,12 @@
 using Documenter
 
+repo_url = "github.com/control-toolbox/GeometricPreconditioner.jl"
+
 makedocs(;
     warnonly=:cross_references,
     sitename="Geometric preconditioner",
     format=Documenter.HTML(;
+        repolink = "https://"*repo_url,
         prettyurls=false,
         size_threshold_ignore=["2D-example.md"],
         assets=[
@@ -19,5 +22,5 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/control-toolbox/GeometricPreconditioner.jl.git", devbranch="main"
+    repo=repo_url*".git", devbranch="main"
 )
