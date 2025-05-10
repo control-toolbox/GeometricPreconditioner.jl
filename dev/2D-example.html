@@ -32,57 +32,57 @@ nle = p0 -&gt; [S(p0[1])]                                      # auxiliary funct
 # Plot
 plot(range(-7, 2, 500), S, xlim = [-7, 2])
 plot!([-7,2], [0,0], color = :black)
-plot!(xlabel = &quot;p0&quot;, ylabel = &quot;S&quot;, legend=false)</code></pre><img src="2D-example-fd630e82.svg" alt="Example block output"/><h2 id="Finite-difference-method"><a class="docs-heading-anchor" href="#Finite-difference-method">Finite difference method</a><a id="Finite-difference-method-1"></a><a class="docs-heading-anchor-permalink" href="#Finite-difference-method" title="Permalink"></a></h2><p>The main goal now is to find the zero of <span>$S$</span>. To this purpose, we use the numerical solver <span>$\texttt{hybrd1}$</span> given in the package <span>$\texttt{MINPACK.jl}$</span>. If we don&#39;t provide the Jacobian <span>$J_S$</span> of <span>$S$</span> to the solver, the finite difference method is used to approximate it. </p><pre><code class="language-julia hljs">ξ = [-1.0]                                                  # initial guess
+plot!(xlabel = &quot;p0&quot;, ylabel = &quot;S&quot;, legend=false)</code></pre><img src="2D-example-86e92b8e.svg" alt="Example block output"/><h2 id="Finite-difference-method"><a class="docs-heading-anchor" href="#Finite-difference-method">Finite difference method</a><a id="Finite-difference-method-1"></a><a class="docs-heading-anchor-permalink" href="#Finite-difference-method" title="Permalink"></a></h2><p>The main goal now is to find the zero of <span>$S$</span>. To this purpose, we use the numerical solver <span>$\texttt{hybrd1}$</span> given in the package <span>$\texttt{MINPACK.jl}$</span>. If we don&#39;t provide the Jacobian <span>$J_S$</span> of <span>$S$</span> to the solver, the finite difference method is used to approximate it. </p><pre><code class="language-julia hljs">ξ = [-1.0]                                                  # initial guess
 S!(s, ξ) = (s[:] .= S(ξ[1]); nothing)                       # auxiliary function
 p0_sol = fsolve(S!, ξ, show_trace = true)                   # solve
 println(p0_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     3.000000e+00     0.000000e+00         0.260700
-     2     3.077457e+00     9.233870e+00         0.213941
-     3     9.829505e-09     2.367685e+00         0.000464
-     4     6.491184e-09     2.415479e-17         0.000411
-     5     5.237606e-08     9.132615e-17         0.000471
-     6     5.775412e-09     7.229585e-17         0.000404
-     7     5.237605e-08     7.229558e-17         0.000484
-     8     5.201817e-09     5.864837e-17         0.000402
-     9     5.237605e-08     5.864847e-17         0.000442
-    10     4.731865e-09     4.853008e-17         0.000403
-    11     5.237606e-08     4.853029e-17         0.000437
-    12     4.339792e-09     4.082120e-17         0.000403
-    13     5.237607e-08     4.082138e-17         0.000447
-    14     4.007716e-09     3.481324e-17         0.000390
-    15     5.237604e-08     3.481267e-17         0.000449
-    16     3.722853e-09     3.003963e-17         0.000391
-    17     5.237606e-08     3.004001e-17         0.000453
-    18     3.475794e-09     2.618526e-17         0.000398
-    19     5.237604e-08     2.618500e-17         0.000443
-    20     3.259488e-09     2.302731e-17         0.000387
-    21     5.237605e-08     2.302742e-17         0.000432
-    22     3.068525e-09     2.040827e-17         0.000400
-    23     5.237604e-08     2.040814e-17         0.000444
-    24     2.898702e-09     1.821171e-17         0.000402
-    25     5.237605e-08     1.821185e-17         0.000439
-    26     2.746691e-09     1.635181e-17         0.000400
-    27     5.237610e-08     1.635236e-17         0.000469
-    28     2.609823e-09     1.476333e-17         0.000397
-    29     2.090234e-09     5.851517e-19         0.000731
-    30     5.237606e-08     9.469727e-18         0.000444
-    31     2.010020e-09     8.756841e-18         0.000396
-    32     1.609840e-09     3.470936e-19         0.000745
-    33     5.237604e-08     5.616972e-18         0.000493
-    34     1.561837e-09     5.286974e-18         0.000453
-    35     1.250892e-09     2.095646e-19         0.000771
-    36     5.237606e-08     3.391488e-18         0.000479
-    37     1.221712e-09     3.235115e-18         0.000407
-    38     9.784849e-10     1.282284e-19         0.000789
-    39     5.237607e-08     2.075235e-18         0.000461
-    40     9.605377e-10     1.999817e-18         0.000406
-    41     3.304990e-08     7.926384e-20         0.000778
-    42     9.551371e-10     7.484981e-20         0.000401
-    43     5.237611e-08     1.977570e-18         0.000458
-    44     9.380301e-10     1.907369e-18         0.000397
-    45     5.237606e-08     1.907158e-18         0.000446
-    46     3.289768e-08     1.840638e-18         0.000456
+     1     3.000000e+00     0.000000e+00         0.252076
+     2     3.077457e+00     9.233870e+00         0.203550
+     3     9.829505e-09     2.367685e+00         0.000400
+     4     6.491184e-09     2.415479e-17         0.000371
+     5     5.237606e-08     9.132615e-17         0.000426
+     6     5.775412e-09     7.229585e-17         0.000367
+     7     5.237605e-08     7.229558e-17         0.000420
+     8     5.201817e-09     5.864837e-17         0.000369
+     9     5.237605e-08     5.864847e-17         0.000412
+    10     4.731865e-09     4.853008e-17         0.000382
+    11     5.237606e-08     4.853029e-17         0.000415
+    12     4.339792e-09     4.082120e-17         0.000373
+    13     5.237607e-08     4.082138e-17         0.000408
+    14     4.007716e-09     3.481324e-17         0.000363
+    15     5.237604e-08     3.481267e-17         0.000412
+    16     3.722853e-09     3.003963e-17         0.000365
+    17     5.237606e-08     3.004001e-17         0.000402
+    18     3.475794e-09     2.618526e-17         0.000372
+    19     5.237604e-08     2.618500e-17         0.000410
+    20     3.259488e-09     2.302731e-17         0.000375
+    21     5.237605e-08     2.302742e-17         0.000408
+    22     3.068525e-09     2.040827e-17         0.000361
+    23     5.237604e-08     2.040814e-17         0.000438
+    24     2.898702e-09     1.821171e-17         0.000392
+    25     5.237605e-08     1.821185e-17         0.000452
+    26     2.746691e-09     1.635181e-17         0.000401
+    27     5.237610e-08     1.635236e-17         0.000435
+    28     2.609823e-09     1.476333e-17         0.000414
+    29     2.090234e-09     5.851517e-19         0.000744
+    30     5.237606e-08     9.469727e-18         0.000452
+    31     2.010020e-09     8.756841e-18         0.000413
+    32     1.609840e-09     3.470936e-19         0.000733
+    33     5.237604e-08     5.616972e-18         0.000463
+    34     1.561837e-09     5.286974e-18         0.000417
+    35     1.250892e-09     2.095646e-19         0.000785
+    36     5.237606e-08     3.391488e-18         0.000438
+    37     1.221712e-09     3.235115e-18         0.000417
+    38     9.784849e-10     1.282284e-19         0.000778
+    39     5.237607e-08     2.075235e-18         0.000448
+    40     9.605377e-10     1.999817e-18         0.000392
+    41     3.304990e-08     7.926384e-20         0.000789
+    42     9.551371e-10     7.484981e-20         0.000387
+    43     5.237611e-08     1.977570e-18         0.000417
+    44     9.380301e-10     1.907369e-18         0.000383
+    45     5.237606e-08     1.907158e-18         0.000427
+    46     3.289768e-08     1.840638e-18         0.000411
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell
  * Starting Point: [-1.0]
@@ -90,10 +90,10 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 0.495230 seconds
+ * Total time: 0.475277 seconds
  * Function Calls: 46
  * Jacobian Calls (df/dx): 6</code></pre><pre><code class="language-julia hljs">sol = ϕ((t0, tf), x0, p0_sol.x)                             # get the optimal trajectory
-plot(sol)                                                   # plot</code></pre><img src="2D-example-ff8429a5.svg" alt="Example block output"/><h2 id="Automatic-differentiation-(wrong-way)"><a class="docs-heading-anchor" href="#Automatic-differentiation-(wrong-way)">Automatic differentiation (wrong way)</a><a id="Automatic-differentiation-(wrong-way)-1"></a><a class="docs-heading-anchor-permalink" href="#Automatic-differentiation-(wrong-way)" title="Permalink"></a></h2><p>Now, we want to provide <span>$J_S$</span> to the solver, thanks to the <span>$\texttt{ForwardDiff.jl}$</span> package. This Jacobian is computed with the variational equation, and leads to a false result in our case.</p><article class="docstring">
+plot(sol)                                                   # plot</code></pre><img src="2D-example-d68ca5fd.svg" alt="Example block output"/><h2 id="Automatic-differentiation-(wrong-way)"><a class="docs-heading-anchor" href="#Automatic-differentiation-(wrong-way)">Automatic differentiation (wrong way)</a><a id="Automatic-differentiation-(wrong-way)-1"></a><a class="docs-heading-anchor-permalink" href="#Automatic-differentiation-(wrong-way)" title="Permalink"></a></h2><p>Now, we want to provide <span>$J_S$</span> to the solver, thanks to the <span>$\texttt{ForwardDiff.jl}$</span> package. This Jacobian is computed with the variational equation, and leads to a false result in our case.</p><article class="docstring">
 <header>
     <a class="docstring-article-toggle-button fa-solid fa-chevron-right" href="javascript:;" title="Expand docstring"> </a>
     <span class="docstring-category">Details.</span>
@@ -150,19 +150,19 @@ JS(ξ) : 0.0</code></pre><p>However, the solver <span>$\texttt{hybrd1}$</span> u
 p0_sol = fsolve(S!, JS!, ξ, show_trace = true)              # solve
 println(p0_sol)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     3.000000e+00     0.000000e+00         0.007050
-     2     5.000000e+00     1.000000e+04         0.060455
-     3     5.000000e+00     3.906250e+03         0.000155
-     4     5.000000e+00     3.906250e+03         0.000631
-     5     5.000000e+00     3.906250e+03         0.000072
-     6     5.000000e+00     5.493164e+02         0.000064
-     7     5.000000e+00     7.724762e+01         0.000068
-     8     9.550782e-01     1.086295e+01         0.000483
-     9     5.144214e-08     2.280436e-01         0.000340
-    10     3.266365e-09     6.615735e-16         0.000401
-    11     2.081820e-09     3.041236e-18         0.000396
-    12     5.237605e-08     9.393622e-18         0.000427
-    13     2.002238e-09     8.689149e-18         0.000397
+     1     3.000000e+00     0.000000e+00         0.007111
+     2     5.000000e+00     1.000000e+04         0.058078
+     3     5.000000e+00     3.906250e+03         0.000116
+     4     5.000000e+00     3.906250e+03         0.000596
+     5     5.000000e+00     3.906250e+03         0.000071
+     6     5.000000e+00     5.493164e+02         0.000062
+     7     5.000000e+00     7.724762e+01         0.000065
+     8     9.550782e-01     1.086295e+01         0.000447
+     9     5.144214e-08     2.280436e-01         0.000329
+    10     3.266365e-09     6.615735e-16         0.000400
+    11     2.081820e-09     3.041236e-18         0.000397
+    12     5.237605e-08     9.393622e-18         0.000457
+    13     2.002238e-09     8.689149e-18         0.000406
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [-1.0]
@@ -170,10 +170,10 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 0.070954 seconds
+ * Total time: 0.068550 seconds
  * Function Calls: 13
  * Jacobian Calls (df/dx): 2</code></pre><pre><code class="language-julia hljs">sol = ϕ((t0, tf), x0, p0_sol.x)                             # get the optimal trajectory
-plt = plot(sol)                                             # plot</code></pre><img src="2D-example-2918460e.svg" alt="Example block output"/><h2 id="Automatic-differentiation-(good-way)"><a class="docs-heading-anchor" href="#Automatic-differentiation-(good-way)">Automatic differentiation (good way)</a><a id="Automatic-differentiation-(good-way)-1"></a><a class="docs-heading-anchor-permalink" href="#Automatic-differentiation-(good-way)" title="Permalink"></a></h2><p>The goal is to provide the true Jacobian of <span>$S$</span> by using the <span>$\texttt{ForwardDiff}$</span> package, and so we need to indicate to the solver that the dynamic of the system change when <span>$p = 0$</span>.</p><p>To understand why we need to give this information to the solver, see the following details. </p><article class="docstring">
+plt = plot(sol)                                             # plot</code></pre><img src="2D-example-7289aaec.svg" alt="Example block output"/><h2 id="Automatic-differentiation-(good-way)"><a class="docs-heading-anchor" href="#Automatic-differentiation-(good-way)">Automatic differentiation (good way)</a><a id="Automatic-differentiation-(good-way)-1"></a><a class="docs-heading-anchor-permalink" href="#Automatic-differentiation-(good-way)" title="Permalink"></a></h2><p>The goal is to provide the true Jacobian of <span>$S$</span> by using the <span>$\texttt{ForwardDiff}$</span> package, and so we need to indicate to the solver that the dynamic of the system change when <span>$p = 0$</span>.</p><p>To understand why we need to give this information to the solver, see the following details. </p><article class="docstring">
 <header>
     <a class="docstring-article-toggle-button fa-solid fa-chevron-right" href="javascript:;" title="Expand docstring"> </a>
     <span class="docstring-category">Details.</span>
@@ -259,9 +259,9 @@ println(p0_sol)</code></pre><pre class="documenter-example-output"><code class="
 JS(ξ) : 2.0
 Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     3.000000e+00     0.000000e+00         3.709413
-     2     2.553513e-15     2.250000e+00         0.009096
-     3     7.771561e-16     1.774937e-30         0.000168
+     1     3.000000e+00     0.000000e+00         3.544805
+     2     2.553513e-15     2.250000e+00         0.008535
+     3     7.771561e-16     1.774937e-30         0.000145
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [-1.0]
@@ -269,7 +269,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 3.718698 seconds
+ * Total time: 3.553503 seconds
  * Function Calls: 3
  * Jacobian Calls (df/dx): 1</code></pre><pre><code class="language-julia hljs"># get optimal trajectory
 sol = φ((t0, tf), x0, p0_sol.x[1], saveat=range(t0, tf, 500))
@@ -285,4 +285,4 @@ plt_p = plot(t, p, label = &quot;p&quot;)
 plt_u = plot(t, u, label = &quot;u&quot;)
 
 plt_xp = plot(plt_x, plt_p, layout=(1, 2))
-plot(plt_xp, plt_u, layout = (2, 1))</code></pre><img src="2D-example-d216b965.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="index.html">« Introduction</a><a class="docs-footer-nextpage" href="2D-preconditioner.html">Geometric preconditioner »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.11.0 on <span class="colophon-date" title="Friday 9 May 2025 20:25">Friday 9 May 2025</span>. Using Julia version 1.11.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+plot(plt_xp, plt_u, layout = (2, 1))</code></pre><img src="2D-example-ed0a032c.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="index.html">« Introduction</a><a class="docs-footer-nextpage" href="2D-preconditioner.html">Geometric preconditioner »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.11.0 on <span class="colophon-date" title="Saturday 10 May 2025 08:59">Saturday 10 May 2025</span>. Using Julia version 1.11.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
