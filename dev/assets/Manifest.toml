@@ -932,7 +932,7 @@ version = "0.5.5"
 [[deps.GeometricPreconditioner]]
 path = "/home/runner/work/GeometricPreconditioner.jl/GeometricPreconditioner.jl"
 uuid = "4fb4c77a-c2a1-4666-8b47-e5158870c0af"
-version = "0.2.3"
+version = "0.2.4"
 
 [[deps.GettextRuntime_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Libiconv_jll"]
