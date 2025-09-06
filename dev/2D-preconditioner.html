@@ -93,22 +93,22 @@ JS₂!(js₂, ξ) = (js₂[:] .= JS₂(ξ); nothing)                      # inte
 p0_sol = fsolve(S₂!, JS₂!, ξ, show_trace = true)                # solve
 println(p0_sol)                                                 # print solution</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     3.845299e+00     0.000000e+00         0.006842
-     2     5.000000e+00     1.559496e+00         4.443639
-     3     5.000000e+00     4.983094e-01         0.000079
+     1     3.845299e+00     0.000000e+00         0.006931
+     2     5.000000e+00     1.559496e+00         4.313495
+     3     5.000000e+00     4.983094e-01         0.000091
      4     5.000000e+00     4.983094e-01         0.000442
-     5     5.000000e+00     4.983094e-01         0.000035
-     6     2.825589e+00     9.417471e-02         0.000233
-     7     3.275582e+00     5.569993e-02         0.000160
-     8     1.835694e+00     1.605481e-02         0.000154
-     9     5.000000e+00     4.108358e-02         0.000020
-    10     8.767661e-01     2.198078e-02         0.000152
-    11     1.052824e+00     2.476848e-03         0.000140
-    12     2.252319e-01     7.373618e-04         0.000167
-    13     6.733089e-02     6.111140e-05         0.000154
-    14     4.061534e-03     3.236777e-06         0.000147
-    15     6.974839e-05     1.047584e-08         0.000146
-    16     7.333033e-08     3.198326e-12         0.000144
+     5     5.000000e+00     4.983094e-01         0.000022
+     6     2.825589e+00     9.417471e-02         0.000261
+     7     3.275582e+00     5.569993e-02         0.000177
+     8     1.835694e+00     1.605481e-02         0.000160
+     9     5.000000e+00     4.108358e-02         0.000018
+    10     8.767661e-01     2.198078e-02         0.000149
+    11     1.052824e+00     2.476848e-03         0.000141
+    12     2.252319e-01     7.373618e-04         0.000149
+    13     6.733089e-02     6.111140e-05         0.000168
+    14     4.061534e-03     3.236777e-06         0.000153
+    15     6.974839e-05     1.047584e-08         0.000152
+    16     7.333033e-08     3.198326e-12         0.000146
     17     1.316183e-12     3.527840e-18         0.000147
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
@@ -117,7 +117,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: algorithm estimates that the relative error between x and the solution is at most tol
- * Total time: 4.452815 seconds
+ * Total time: 4.322817 seconds
  * Function Calls: 17
  * Jacobian Calls (df/dx): 2</code></pre><pre><code class="language-julia hljs">sol = ϕ((t0, tf), x0, [η(p0_sol.x[1]), p0_sol.x[1]],
     saveat=range(t0, tf, 500))                                  # get optimal trajectory
@@ -248,23 +248,23 @@ JT₂!(jt₂, ξ) = (jt₂[:] .= JT₂(ξ); nothing)                      # inte
 q_sol = fsolve(T₂!, JT₂!, ξ, show_trace = true)                 # solve
 println(q_sol)                                                  # print solution</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Iter     f(x) inf-norm    Step 2-norm      Step time
 ------   --------------   --------------   --------------
-     1     3.223430e-01     0.000000e+00         0.000449
-     2     7.034101e-02     1.406250e-01         4.623461
-     3     1.135104e-02     1.095650e-02         0.000235
-     4     1.033639e-04     4.056828e-04         0.000165
-     5     2.155036e-08     3.426091e-08         0.000156
-     6     1.844728e-15     1.489881e-15         0.000170
-     7     8.426605e-16     1.091709e-29         0.000160
-     8     8.426605e-16     1.073374e-30         0.000154
-     9     2.155036e-08     1.489881e-15         0.000156
-    10     1.802442e-15     1.489881e-15         0.000432
-    11     2.762224e-15     8.033881e-30         0.000179
-    12     1.802442e-15     3.635975e-30         0.000156
-    13     3.530049e-15     1.193401e-30         0.000151
-    14     8.426605e-16     4.500591e-31         0.000146
-    15     3.367258e-10     3.637406e-19         0.000152
-    16     1.802442e-15     3.637422e-19         0.000153
-    17     2.762224e-15     8.033854e-30         0.000171
+     1     3.223430e-01     0.000000e+00         0.000460
+     2     7.034101e-02     1.406250e-01         4.606617
+     3     1.135104e-02     1.095650e-02         0.000289
+     4     1.033639e-04     4.056828e-04         0.000188
+     5     2.155036e-08     3.426091e-08         0.000164
+     6     1.844728e-15     1.489881e-15         0.000157
+     7     8.426605e-16     1.091709e-29         0.000158
+     8     8.426605e-16     1.073374e-30         0.000156
+     9     2.155036e-08     1.489881e-15         0.000172
+    10     1.802442e-15     1.489881e-15         0.000434
+    11     2.762224e-15     8.033881e-30         0.000164
+    12     1.802442e-15     3.635975e-30         0.000154
+    13     3.530049e-15     1.193401e-30         0.000153
+    14     8.426605e-16     4.500591e-31         0.000180
+    15     3.367258e-10     3.637406e-19         0.000158
+    16     1.802442e-15     3.637422e-19         0.000152
+    17     2.762224e-15     8.033854e-30         0.000154
 Results of Nonlinear Solver Algorithm
  * Algorithm: Modified Powell (User Jac, Expert)
  * Starting Point: [0.5]
@@ -272,7 +272,7 @@ Results of Nonlinear Solver Algorithm
  * Inf-norm of residuals: 0.000000
  * Convergence: true
  * Message: iteration is not making good progress, measured by improvement from last 10 iterations
- * Total time: 4.626663 seconds
+ * Total time: 4.609924 seconds
  * Function Calls: 17
  * Jacobian Calls (df/dx): 2</code></pre><pre><code class="language-julia hljs">p0_sol = p₀(transpose(A)*[η(q_sol.x[1]), q_sol.x[1]])           # get the optimal initial costate in old coordinates
 sol = ϕ((t0, tf), x0, p0_sol, saveat=range(t0, tf, 500))        # get optimal trajectory
@@ -367,4 +367,4 @@ scatter!(1,1, markercolor = :blue, markerstrokecolor = :blue, marker = 2, label 
 scatter!(1,1, markercolor = :red, markerstrokecolor = :red, marker = 2, label = &quot;not converged&quot;)
 
 plt_2 = plot(plt_21, plt_22, layout = (1,2))
-plot(plt_1, plt_2, layout = grid(2,1, heights = [0.5, 0.5]), size=(700, 600))</code></pre><img src="2D-preconditioner-ec304415.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="2D-example.html">« Indirect shooting</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.14.1 on <span class="colophon-date" title="Tuesday 19 August 2025 10:50">Tuesday 19 August 2025</span>. Using Julia version 1.11.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+plot(plt_1, plt_2, layout = grid(2,1, heights = [0.5, 0.5]), size=(700, 600))</code></pre><img src="2D-preconditioner-ec304415.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="2D-example.html">« Indirect shooting</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.14.1 on <span class="colophon-date" title="Saturday 6 September 2025 17:06">Saturday 6 September 2025</span>. Using Julia version 1.11.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
