@@ -18,7 +18,7 @@ cp(
     force=true,
 )
 
-repo_url = "github.com/control-toolbox/GeometricPreconditioner.jl"
+repo_url = "github.com/remydutto/GeometricPreconditioner.jl"
 
 makedocs(;
     warnonly=:cross_references,

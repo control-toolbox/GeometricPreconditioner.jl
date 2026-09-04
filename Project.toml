@@ -1,7 +1,11 @@
 name = "GeometricPreconditioner"
 uuid = "4fb4c77a-c2a1-4666-8b47-e5158870c0af"
-authors = ["Olivier Cots <olivier.cots@irit.fr>"]
 version = "0.4.0"
+authors = ["Olivier Cots <olivier.cots@irit.fr>"]
+
+[deps]
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 
 [compat]
+Plots = "1.41.6"
 julia = "1.10"
