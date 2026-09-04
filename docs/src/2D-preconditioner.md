@@ -4,7 +4,7 @@ function fsolve(f, j, x; kwargs...)
     try
         MINPACK.fsolve(f, j, x; kwargs...)
     catch e
-        println("Erreur using MINPACK")
+        println("Error using MINPACK")
         println(e)
         println("hybrj not supported. Replaced by hybrd even if it is not visible on the doc.")
         MINPACK.fsolve(f, x; kwargs...)
@@ -17,7 +17,7 @@ end
 
 The goal is now to improve the convergence of the indirect shooting method, by using a geometric preconditioner of the shooting function. The classical shooting method suffers from poor convergence properties, and one need to provide a good initial guess for the costate. The geometric preconditioning approach transforms the boundary value problem into a coordinate system that aligns with a natural structure, which significantly improve the convergence rate of the shooting method.
 
-The key idea is to approach the augmented accessible set by an ellipse, in order to propose a linear diffeomorphism that trasnform this ellipse into the unit circle. This diffeomorphism is then used to precondition the shooting function, which improves the convergence rate of the shooting method. For more information about this method, please see [insert article].
+The key idea is to approach the augmented accessible set by an ellipse, in order to propose a linear diffeomorphism that transforms this ellipse into the unit circle. This diffeomorphism is then used to precondition the shooting function, which improves the convergence rate of the shooting method. For more information about this method, please see [insert article].
 
 Let us start by importing the packages
 
@@ -182,7 +182,7 @@ plot_sol(sol)
 
 ## Construction of the geometric preconditioner
 
-The goal is now to use the geometric preconditioning method proposed in [mettre article]. For this purpose, the first step is to create points on the boundary of the accessible augmented set, and to fit an ellipse to these points. 
+The goal is now to use the geometric preconditioning method proposed in [insert article]. For this purpose, the first step is to create points on the boundary of the accessible augmented set, and to fit an ellipse to these points. 
 
 The second step is to create the linear diffeomorphism ``\phi \colon \mathbb R^2 \to \mathbb R^2, \hat x \to A \hat x + B`` that transforms the fitted ellipse into the unit circle, and that satisfies the condition 
 
@@ -230,7 +230,7 @@ and where ``\beta_0 = \arctan \left(\frac{a \sin(\theta)}{b \cos(\theta)} \right
 
         # Generate ellipse points
         β = range(-Base.π, Base.π; length = 100)                            # Angle parameter for ellipse
-        # Compute ellipse points: rotate by -Θ, scale by (a,b), shift by center c
+        # Compute ellipse points: rotate by -θ, scale by (a,b), shift by center c
         xₑ = r(-θ)*s(a,b)*
             transpose(reduce(hcat,[sin.(β), cos.(β)])).+c                   # Ellipse boundary points
 
@@ -370,7 +370,7 @@ plot_sol(sol)
 
 ## Comparison 
 
-It is shown in [mettre article] that if the boundary of the augmented accessible set is the fitted ellipse then the shooting function ``T_2`` is defined by
+It is shown in [insert article] that if the boundary of the augmented accessible set is the fitted ellipse then the shooting function ``T_2`` is defined by
 
 ```math
     T_2(q) = q-y_T.

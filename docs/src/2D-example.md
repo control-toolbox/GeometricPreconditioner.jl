@@ -5,7 +5,7 @@ function fsolve(f, j, x; kwargs...)
     try
         MINPACK.fsolve(f, j, x; kwargs...)
     catch e
-        println("Erreur using MINPACK")
+        println("Error using MINPACK")
         println(e)
         println("hybrj not supported. Replaced by hybrd even if it is not visible on the doc.")
         MINPACK.fsolve(f, x; kwargs...)

@@ -1,8 +1,8 @@
 The goal of this application is to improve the convergence of indirect shooting method for solving optimal control problems. The indirect shooting method is a powerful technique for solving optimal control problems via the Pontryagin Maximum Principle, but it often suffers from poor convergence properties due to the sensitivity of the shooting function.
 
-The first part focus on the proper implementation of the indirect shooting method. A critical aspect of the shooting method is the computation of the Jacobian of the shooting function, which is required by Newton-type solvers. The automatic differentiation can be used to compute this Jacobien, but some implementation choices can lead to a false result.
+The first part focuses on the proper implementation of the indirect shooting method. A critical aspect of the shooting method is the computation of the Jacobian of the shooting function, which is required by Newton-type solvers. Automatic differentiation can be used to compute this Jacobian, but some implementation choices can lead to a false result.
 
-The second part introduced a geometric preconditioning approach to improve the convergence of the indirect shooting method.  The core idea is to transform the boundary value problem into a coordinate system that aligns with the natural structure of the problem. The comparison between the standard and preconditioned methods will be presented, and will highlight the benefit of using the geometric preconditioned shooting function.
+The second part introduces a geometric preconditioning approach to improve the convergence of the indirect shooting method.  The core idea is to transform the boundary value problem into a coordinate system that aligns with the natural structure of the problem. The comparison between the standard and preconditioned methods will be presented, and will highlight the benefit of using the geometric preconditioned shooting function.
 
 ## Optimal control problem
 
@@ -17,11 +17,11 @@ We consider in this application the following toy optimal control problem
     \end{array} \right.
 ```
 
-with ``x_0``, ``t_0``, ``x_f`` and ``t_f`` fixed. This problem is simple, and can be analytically solve without the use of numerical method. However, the goal is to solve this problem by indirect shooting.  
+with ``x_0``, ``t_0``, ``x_f`` and ``t_f`` fixed. This problem is simple, and can be analytically solved without the use of numerical methods. However, the goal is to solve this problem by indirect shooting.  
 
 ## References
 
-- [mettre article]
+- [insert article]
 - Olivier Cots, Rémy Dutto, Sophie Jan, Serge Laporte (2024). [Geometric preconditioner for indirect shooting and application to hybrid vehicle](https://www.sciencedirect.com/science/article/pii/S2405896324018950). _4th IFAC MICNON Conference_.
 - Rémy Dutto (2024). [Méthode à deux niveaux et préconditionnement géométrique en contrôle optimal. Application au problème de répartition de couple des véhicules hybrides électriques](https://hal.science/tel-04792906v1). _Thèse de doctorat, Université de Toulouse_.
 
